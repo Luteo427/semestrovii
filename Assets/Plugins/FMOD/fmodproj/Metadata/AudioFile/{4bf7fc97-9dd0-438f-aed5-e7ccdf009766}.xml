@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{4bf7fc97-9dd0-438f-aed5-e7ccdf009766}">
+		<property name="assetPath">
+			<value>TatykiV2.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>219.31200000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{843600aa-9584-4b2b-805d-40bd9eaa0a38}</destination>
+		</relationship>
+	</object>
+</objects>
