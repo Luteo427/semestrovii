@@ -1,0 +1,382 @@
+fileFormatVersion: 2
+guid: 6e89cd270d5f832418c9de067dea7973
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1387825385479954290
+    second: CardsInPaint (2)_0
+  - first:
+      213: 4003988063305808408
+    second: CardsInPaint (2)_1
+  - first:
+      213: 7807906084285722567
+    second: CardsInPaint (2)_2
+  - first:
+      213: -4455978519331969387
+    second: CardsInPaint (2)_3
+  - first:
+      213: -5463049481012387424
+    second: CardsInPaint (2)_4
+  - first:
+      213: -2058101208909944537
+    second: CardsInPaint (2)_5
+  - first:
+      213: 8956899860998888074
+    second: CardsInPaint (2)_6
+  - first:
+      213: -4040187865531886604
+    second: CardsInPaint (2)_7
+  - first:
+      213: -690406944439848062
+    second: CardsInPaint (2)_8
+  - first:
+      213: 9088528313408213590
+    second: CardsInPaint (2)_9
+  - first:
+      213: 5427966517948180114
+    second: CardsInPaint (2)_10
+  - first:
+      213: 3830697070513038215
+    second: CardsInPaint (2)_11
+  - first:
+      213: 868717964415757598
+    second: CardsInPaint (2)_12
+  - first:
+      213: -4046526577054758466
+    second: CardsInPaint (2)_13
+  - first:
+      213: 724737473681861281
+    second: CardsInPaint (2)_14
+  - first:
+      213: -7898410623345338186
+    second: CardsInPaint (2)_15
+  - first:
+      213: -195931321459246806
+    second: CardsInPaint (2)_16
+  - first:
+      213: -2725150832601094647
+    second: CardsInPaint (2)_17
+  - first:
+      213: 5353833274470164693
+    second: CardsInPaint (2)_18
+  - first:
+      213: 7810424027587346168
+    second: CardsInPaint (2)_19
+  - first:
+      213: -4930547737422404603
+    second: CardsInPaint (2)_20
+  - first:
+      213: 7057641443842153470
+    second: CardsInPaint (2)_21
+  - first:
+      213: 5197248143282523021
+    second: CardsInPaint (2)_22
+  - first:
+      213: -4118046521863570827
+    second: CardsInPaint (2)_23
+  - first:
+      213: -2946431674720975666
+    second: CardsInPaint (2)_24
+  - first:
+      213: -7766921706552983788
+    second: CardsInPaint (2)_25
+  - first:
+      213: 135214253191251470
+    second: CardsInPaint (2)_26
+  - first:
+      213: 7944948990926696728
+    second: CardsInPaint (2)_27
+  - first:
+      213: 5122309233491096754
+    second: CardsInPaint (2)_28
+  - first:
+      213: 694222471253627138
+    second: CardsInPaint (2)_29
+  - first:
+      213: 2090412250105313641
+    second: CardsInPaint (2)_30
+  - first:
+      213: -4610561137547938921
+    second: CardsInPaint (2)_31
+  - first:
+      213: 7759981633344730023
+    second: CardsInPaint (2)_32
+  - first:
+      213: 8196992492462424572
+    second: CardsInPaint (2)_33
+  - first:
+      213: -3260383114766281107
+    second: CardsInPaint (2)_34
+  - first:
+      213: 367261989202775204
+    second: CardsInPaint (2)_35
+  - first:
+      213: -1661801562152502176
+    second: CardsInPaint (2)_36
+  - first:
+      213: -7444838601520718063
+    second: CardsInPaint (2)_37
+  - first:
+      213: -5295987530911252203
+    second: CardsInPaint (2)_38
+  - first:
+      213: -3475936432356352403
+    second: CardsInPaint (2)_39
+  - first:
+      213: 9035824980835459414
+    second: CardsInPaint (2)_40
+  - first:
+      213: 2274213793618955177
+    second: CardsInPaint (2)_41
+  - first:
+      213: -7573693209607060398
+    second: CardsInPaint (2)_42
+  - first:
+      213: 7653415090184493214
+    second: CardsInPaint (2)_43
+  - first:
+      213: 1328420529588317148
+    second: CardsInPaint (2)_44
+  - first:
+      213: 6983692103032830658
+    second: CardsInPaint (2)_45
+  - first:
+      213: -5838017915082072408
+    second: CardsInPaint (2)_46
+  - first:
+      213: 3202877675293210785
+    second: CardsInPaint (2)_47
+  - first:
+      213: 3601642163194826692
+    second: CardsInPaint (2)_48
+  - first:
+      213: -6527218148712344594
+    second: CardsInPaint (2)_49
+  - first:
+      213: 3650790941330450094
+    second: CardsInPaint (2)_50
+  - first:
+      213: 673206439591168531
+    second: CardsInPaint (2)_51
+  - first:
+      213: -5463517155933202079
+    second: CardsInPaint (2)_52
+  - first:
+      213: 5169259699022084363
+    second: CardsInPaint (2)_53
+  - first:
+      213: 8968276525451382565
+    second: CardsInPaint (2)_54
+  - first:
+      213: -1357454475871158880
+    second: CardsInPaint (2)_55
+  - first:
+      213: 4656818227343943846
+    second: CardsInPaint (2)_56
+  - first:
+      213: -4885231562660531617
+    second: CardsInPaint (2)_57
+  - first:
+      213: -7124961812695849315
+    second: CardsInPaint (2)_58
+  - first:
+      213: -6508788208142205326
+    second: CardsInPaint (2)_59
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 200
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CardEmpty
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 1401
+        width: 158
+        height: 250
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27f5dc7c5db824310800000000000000
+      internalID: 1387825385479954290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 8f2ddd2f6088f0949b034b509f07f747
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      CardEmpty: 1387825385479954290
+      CardsInPaint (2)_1: 4003988063305808408
+      CardsInPaint (2)_10: 5427966517948180114
+      CardsInPaint (2)_11: 3830697070513038215
+      CardsInPaint (2)_12: 868717964415757598
+      CardsInPaint (2)_13: -4046526577054758466
+      CardsInPaint (2)_14: 724737473681861281
+      CardsInPaint (2)_15: -7898410623345338186
+      CardsInPaint (2)_16: -195931321459246806
+      CardsInPaint (2)_17: -2725150832601094647
+      CardsInPaint (2)_18: 5353833274470164693
+      CardsInPaint (2)_19: 7810424027587346168
+      CardsInPaint (2)_2: 7807906084285722567
+      CardsInPaint (2)_20: -4930547737422404603
+      CardsInPaint (2)_21: 7057641443842153470
+      CardsInPaint (2)_22: 5197248143282523021
+      CardsInPaint (2)_23: -4118046521863570827
+      CardsInPaint (2)_24: -2946431674720975666
+      CardsInPaint (2)_25: -7766921706552983788
+      CardsInPaint (2)_26: 135214253191251470
+      CardsInPaint (2)_27: 7944948990926696728
+      CardsInPaint (2)_28: 5122309233491096754
+      CardsInPaint (2)_29: 694222471253627138
+      CardsInPaint (2)_3: -4455978519331969387
+      CardsInPaint (2)_30: 2090412250105313641
+      CardsInPaint (2)_31: -4610561137547938921
+      CardsInPaint (2)_32: 7759981633344730023
+      CardsInPaint (2)_33: 8196992492462424572
+      CardsInPaint (2)_34: -3260383114766281107
+      CardsInPaint (2)_35: 367261989202775204
+      CardsInPaint (2)_36: -1661801562152502176
+      CardsInPaint (2)_37: -7444838601520718063
+      CardsInPaint (2)_38: -5295987530911252203
+      CardsInPaint (2)_39: -3475936432356352403
+      CardsInPaint (2)_4: -5463049481012387424
+      CardsInPaint (2)_40: 9035824980835459414
+      CardsInPaint (2)_41: 2274213793618955177
+      CardsInPaint (2)_42: -7573693209607060398
+      CardsInPaint (2)_43: 7653415090184493214
+      CardsInPaint (2)_44: 1328420529588317148
+      CardsInPaint (2)_45: 6983692103032830658
+      CardsInPaint (2)_46: -5838017915082072408
+      CardsInPaint (2)_47: 3202877675293210785
+      CardsInPaint (2)_48: 3601642163194826692
+      CardsInPaint (2)_49: -6527218148712344594
+      CardsInPaint (2)_5: -2058101208909944537
+      CardsInPaint (2)_50: 3650790941330450094
+      CardsInPaint (2)_51: 673206439591168531
+      CardsInPaint (2)_52: -5463517155933202079
+      CardsInPaint (2)_53: 5169259699022084363
+      CardsInPaint (2)_54: 8968276525451382565
+      CardsInPaint (2)_55: -1357454475871158880
+      CardsInPaint (2)_56: 4656818227343943846
+      CardsInPaint (2)_57: -4885231562660531617
+      CardsInPaint (2)_58: -7124961812695849315
+      CardsInPaint (2)_59: -6508788208142205326
+      CardsInPaint (2)_6: 8956899860998888074
+      CardsInPaint (2)_7: -4040187865531886604
+      CardsInPaint (2)_8: -690406944439848062
+      CardsInPaint (2)_9: 9088528313408213590
+      CardsInPaint (old)_0: -100203622
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

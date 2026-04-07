@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Card
+  - DropZone
   layers:
   - Default
   - TransparentFX
@@ -15,7 +17,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - DropZone
   - 
   - 
   - 
@@ -41,14 +43,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: People
-    uniqueID: 1431640613
+  - name: Object
+    uniqueID: 1486605127
     locked: 0
-  - name: Objects
-    uniqueID: 3055648063
-    locked: 0
-  - name: UI
-    uniqueID: 1524766875
+  - name: Card
+    uniqueID: 1500484107
     locked: 0
   m_RenderingLayers:
   - Default
