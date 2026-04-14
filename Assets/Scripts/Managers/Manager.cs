@@ -16,7 +16,7 @@ public abstract class Manager<T> : MonoBehaviour where T : Manager<T>
 
             if (_instance == null)
             {
-                _instance = FindFirstObjectByType<T>();
+                _instance = FindAnyObjectByType<T>();
 
                 if (_instance == null)
                 {
