@@ -6,36 +6,36 @@ public class DebugMenu : MonoBehaviour
 {
     [Tooltip("Действие для вызова меню. По умолчанию: Тильда (~)")]
     // Создаем локальное действие с привязкой по умолчанию
-    public InputAction toggleMenuAction = new InputAction("ToggleDebug", binding: "<Keyboard>/backquote");
+    public InputAction ToggleMenuAction = new("ToggleDebug", binding: "<Keyboard>/backquote");
 
-    private bool showMenu = false;
-    private bool godMode = false;
+    private bool _showMenu = false;
+    private bool _godMode = false;
 
     // В новой системе ввода действия нужно явно включать и выключать
     private void OnEnable()
     {
-        toggleMenuAction.Enable();
+        ToggleMenuAction.Enable();
     }
 
     private void OnDisable()
     {
-        toggleMenuAction.Disable();
+        ToggleMenuAction.Disable();
     }
 
-    void Update()
+    private void Update()
     {
         // Свойство triggered возвращает true только в кадре нажатия (аналог GetKeyDown)
-        if (toggleMenuAction.triggered)
+        if (ToggleMenuAction.triggered)
         {
-            showMenu = !showMenu;
+            _showMenu = !_showMenu;
         }
     }
 
-    void OnGUI()
+    private void OnGUI()
     {
-        if (!showMenu) return;
+        if (!_showMenu) return;
 
-        Rect windowRect = new Rect(20, 20, 250, 300);
+        Rect windowRect = new(20, 20, 250, 300);
         GUI.Box(windowRect, "Отладочное меню");
 
         GUILayout.BeginArea(new Rect(30, 50, 230, 260));
@@ -57,19 +57,19 @@ public class DebugMenu : MonoBehaviour
 
         GUILayout.Space(10);
 
-        bool previousGodMode = godMode;
-        godMode = GUILayout.Toggle(godMode, " Включить God Mode");
+        bool previousGodMode = _godMode;
+        _godMode = GUILayout.Toggle(_godMode, " Включить God Mode");
         
-        if (godMode != previousGodMode)
+        if (_godMode != previousGodMode)
         {
-            Debug.Log($"[Debug] Режим бога: {godMode}");
+            Debug.Log($"[Debug] Режим бога: {_godMode}");
         }
 
         GUILayout.Space(20);
 
         if (GUILayout.Button("Закрыть меню"))
         {
-            showMenu = false;
+            _showMenu = false;
         }
 
         GUILayout.EndArea();

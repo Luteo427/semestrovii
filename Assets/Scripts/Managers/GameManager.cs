@@ -3,50 +3,52 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public enum GameState { Dealing, PlayerSelection, BotTurn, Resolution, TablePhase }
-
-public class GameManager : MonoBehaviour
+public enum GameState
 {
-    public static GameManager Instance { get; private set; }
+    Dealing,
+    PlayerSelection,
+    BotTurn,
+    Resolution,
+    TablePhase
+}
 
-    public GameState currentState;
-    public CardAnchor playerHand;
-    public CardAnchor botHand;
-    public CardAnchor playerDiscardPile;
-    public CardAnchor botDiscardPile;
-    public CardAnchor tableAnchor;
-    public CardAnchor commonDiscardPile;
-    public Deck deck;
+public class GameManager : Manager<GameManager>
+{
+    public GameState CurrentState;
+    public CardAnchor PlayerHand;
+    public CardAnchor BotHand;
+    public CardAnchor PlayerDiscardPile;
+    public CardAnchor BotDiscardPile;
+    public CardAnchor TableAnchor;
+    public CardAnchor CommonDiscardPile;
+    public Deck Deck;
 
-    public int initialDealCount = 6;
-    public int cardsToKeep = 2;
-    private List<Card> playerSelectedCards = new List<Card>();
-    private List<Card> botSelectedCards = new List<Card>();
+    public int InitialDealCount = 6;
+    public int CardsToKeep = 2;
+    private List<Card> _playerSelectedCards = new();
+    private List<Card> _botSelectedCards = new();
 
-    private Camera mainCamera;
+    private Camera _mainCamera;
 
-    private void Awake()
+    protected override void OnInit()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-
-        mainCamera = Camera.main;
+        _mainCamera = Camera.main;
     }
 
     private void Start()
     {
-        deck.InitializeDeck();
+        Deck.InitializeDeck();
         StartCoroutine(DealCardsRoutine());
     }
 
     private void Update()
     {
-        if (currentState != GameState.PlayerSelection) return;
+        if (CurrentState != GameState.PlayerSelection) return;
 
         if (Pointer.current != null && Pointer.current.press.wasPressedThisFrame)
         {
             Vector2 pointerPosition = Pointer.current.position.ReadValue();
-            Vector3 worldPosition = mainCamera.ScreenToWorldPoint(pointerPosition);
+            Vector3 worldPosition = _mainCamera.ScreenToWorldPoint(pointerPosition);
             
             RaycastHit2D hit = Physics2D.Raycast(worldPosition, Vector2.zero);
 
@@ -63,46 +65,46 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator DealCardsRoutine()
     {
-        currentState = GameState.Dealing;
+        CurrentState = GameState.Dealing;
         
-        for (int i = 0; i < initialDealCount; i++)
+        for (int i = 0; i < InitialDealCount; i++)
         {
-            DealCardTo(playerHand, true);
+            DealCardTo(PlayerHand, true);
             yield return new WaitForSeconds(0.15f);
-            DealCardTo(botHand, false);
+            DealCardTo(BotHand, false);
             yield return new WaitForSeconds(0.15f);
         }
         
-        currentState = GameState.PlayerSelection;
+        CurrentState = GameState.PlayerSelection;
     }
 
     private void DealCardTo(CardAnchor targetHand, bool openFace)
     {
-        Card card = deck.DrawCard(deck.transform.position);
+        Card card = Deck.DrawCard(Deck.transform.position);
         
         if (card == null) return;
         
         card.SetOpened(openFace);
         targetHand.cards.Add(card);
-        targetHand.UpdateLayout();
+        targetHand.UpdateLayout(); 
     }
 
     public void OnCardClicked(Card card)
     {
-        if (!playerHand.cards.Contains(card)) return;
+        if (!PlayerHand.cards.Contains(card)) return;
 
-        if (playerSelectedCards.Contains(card))
+        if (_playerSelectedCards.Contains(card))
         {
-            playerSelectedCards.Remove(card);
+            _playerSelectedCards.Remove(card);
             card.transform.localScale = Vector3.one; 
         }
-        else if (playerSelectedCards.Count < cardsToKeep)
+        else if (_playerSelectedCards.Count < CardsToKeep)
         {
-            playerSelectedCards.Add(card);
+            _playerSelectedCards.Add(card);
             card.transform.localScale = Vector3.one * 1.2f; 
         }
 
-        if (playerSelectedCards.Count == cardsToKeep)
+        if (_playerSelectedCards.Count == CardsToKeep)
         {
             StartCoroutine(ProcessSelectionRoutine());
         }
@@ -110,24 +112,24 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ProcessSelectionRoutine()
     {
-        currentState = GameState.BotTurn;
+        CurrentState = GameState.BotTurn;
         yield return new WaitForSeconds(0.5f);
 
-        for (int i = playerHand.cards.Count - 1; i >= 0; i--)
+        for (int i = PlayerHand.cards.Count - 1; i >= 0; i--)
         {
-            Card card = playerHand.cards[i];
+            Card card = PlayerHand.cards[i];
             card.transform.localScale = Vector3.one;
 
-            if (!playerSelectedCards.Contains(card))
+            if (!_playerSelectedCards.Contains(card))
             {
-                playerHand.cards.RemoveAt(i);
+                PlayerHand.cards.RemoveAt(i);
                 card.SetOpened(false);
-                playerDiscardPile.cards.Add(card);
+                PlayerDiscardPile.cards.Add(card);
             }
         }
 
-        playerHand.UpdateLayout();
-        playerDiscardPile.UpdateLayout();
+        PlayerHand.UpdateLayout();
+        PlayerDiscardPile.UpdateLayout();
         
         StartCoroutine(BotTurnRoutine());
     }
@@ -136,56 +138,56 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        botSelectedCards.Add(botHand.cards[0]);
-        botSelectedCards.Add(botHand.cards[1]);
+        _botSelectedCards.Add(BotHand.cards[0]);
+        _botSelectedCards.Add(BotHand.cards[1]);
 
-        for (int i = botHand.cards.Count - 1; i >= 0; i--)
+        for (int i = BotHand.cards.Count - 1; i >= 0; i--)
         {
-            Card card = botHand.cards[i];
+            Card card = BotHand.cards[i];
             
-            if (!botSelectedCards.Contains(card))
+            if (!_botSelectedCards.Contains(card))
             {
-                botHand.cards.RemoveAt(i);
+                BotHand.cards.RemoveAt(i);
                 card.SetOpened(false);
-                botDiscardPile.cards.Add(card);
+                BotDiscardPile.cards.Add(card);
             }
         }
 
-        botHand.UpdateLayout();
-        botDiscardPile.UpdateLayout();
+        BotHand.UpdateLayout();
+        BotDiscardPile.UpdateLayout();
 
         yield return new WaitForSeconds(1f);
         
         StartCoroutine(ResolutionAndTablePhaseRoutine());
     }
-
+    
     private IEnumerator ResolutionAndTablePhaseRoutine()
     {
-        currentState = GameState.Resolution;
+        CurrentState = GameState.Resolution;
 
         yield return new WaitForSeconds(2f);
         
-        currentState = GameState.TablePhase;
+        CurrentState = GameState.TablePhase;
 
-        foreach (Card c in playerDiscardPile.cards) c.SetOpened(false);
-        foreach (Card c in botDiscardPile.cards) c.SetOpened(false);
+        foreach (Card c in PlayerDiscardPile.cards) c.SetOpened(false);
+        foreach (Card c in BotDiscardPile.cards) c.SetOpened(false);
 
         yield return new WaitForSeconds(0.5f);
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 6; i++) 
         {
-            Card card = deck.DrawCard(deck.transform.position);
+            Card card = Deck.DrawCard(Deck.transform.position);
             if (card != null)
             {
                 card.SetOpened(false);
-                tableAnchor.cards.Add(card);
+                TableAnchor.cards.Add(card);
             }
         }
 
-        tableAnchor.UpdateLayout();
+        TableAnchor.UpdateLayout();
         yield return new WaitForSeconds(0.5f);
 
-        List<Card> leftToRightCards = new List<Card>(tableAnchor.cards);
+        List<Card> leftToRightCards = new List<Card>(TableAnchor.cards);
         leftToRightCards.Sort((a, b) => a.transform.position.x.CompareTo(b.transform.position.x));
 
         for (int i = 0; i < leftToRightCards.Count; i++)
@@ -196,48 +198,48 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        foreach (Card c in tableAnchor.cards) c.SetOpened(false);
+        foreach (Card c in TableAnchor.cards) c.SetOpened(false);
         yield return new WaitForSeconds(0.5f);
 
-        Vector3 centerPos = tableAnchor.transform.position;
-        foreach (Card c in tableAnchor.cards)
+        Vector3 centerPos = TableAnchor.transform.position;
+        foreach (Card c in TableAnchor.cards)
         {
             c.MoveTo(centerPos, 0.3f);
         }
         
         yield return new WaitForSeconds(0.4f);
 
-        for (int i = 0; i < tableAnchor.cards.Count; i++)
+        for (int i = 0; i < TableAnchor.cards.Count; i++)
         {
-            int randomIndex = Random.Range(i, tableAnchor.cards.Count);
-            Card temp = tableAnchor.cards[i];
-            tableAnchor.cards[i] = tableAnchor.cards[randomIndex];
-            tableAnchor.cards[randomIndex] = temp;
+            int randomIndex = Random.Range(i, TableAnchor.cards.Count);
+            Card temp = TableAnchor.cards[i];
+            TableAnchor.cards[i] = TableAnchor.cards[randomIndex];
+            TableAnchor.cards[randomIndex] = temp;
         }
         
-        tableAnchor.UpdateLayout();
+        TableAnchor.UpdateLayout();
         
         yield return new WaitForSeconds(0.6f);
 
         for (int i = 0; i < 3; i++)
         {
-            if (tableAnchor.cards.Count > 0)
+            if (TableAnchor.cards.Count > 0)
             {
-                Card card = tableAnchor.cards[0];
-                tableAnchor.cards.RemoveAt(0);
-                commonDiscardPile.cards.Add(card);
+                Card card = TableAnchor.cards[0];
+                TableAnchor.cards.RemoveAt(0);
+                CommonDiscardPile.cards.Add(card);
             }
         }
 
-        tableAnchor.UpdateLayout();
-        commonDiscardPile.UpdateLayout();
+        TableAnchor.UpdateLayout();
+        CommonDiscardPile.UpdateLayout();
 
         yield return new WaitForSeconds(0.5f);
 
-        if (tableAnchor.cards.Count > 0)
+        if (TableAnchor.cards.Count > 0)
         {
-            int randomCardIndex = Random.Range(0, tableAnchor.cards.Count);
-            tableAnchor.cards[randomCardIndex].SetOpened(true);
+            int randomCardIndex = Random.Range(0, TableAnchor.cards.Count);
+            TableAnchor.cards[randomCardIndex].SetOpened(true);
         }
     }
 }

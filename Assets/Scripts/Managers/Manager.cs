@@ -20,7 +20,7 @@ public abstract class Manager<T> : MonoBehaviour where T : Manager<T>
 
                 if (_instance == null)
                 {
-                    GameObject singletonObject = new GameObject(typeof(T).Name);
+                    GameObject singletonObject = new(typeof(T).Name);
                     _instance = singletonObject.AddComponent<T>();
                 }
             }
@@ -43,7 +43,7 @@ public abstract class Manager<T> : MonoBehaviour where T : Manager<T>
         {
             transform.parent = null;
         }
-        
+
         DontDestroyOnLoad(gameObject);
 
         OnInit();

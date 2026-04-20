@@ -14,27 +14,52 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 
 # Unity-specific diagnostic suppressions
-# IDE0051: Remove unused private members — false positive for Unity messages
 dotnet_diagnostic.IDE0051.severity = none
-
-# IDE0044: Add readonly modifier — false positive for serialized fields
 dotnet_diagnostic.IDE0044.severity = none
-
-# CS0649: Field is never assigned — false positive for [SerializeField]
 dotnet_diagnostic.CS0649.severity = none
 
 # Code quality
 dotnet_diagnostic.CA1822.severity = suggestion
 dotnet_diagnostic.CA2235.severity = warning
 
-# Naming conventions
-dotnet_naming_rule.private_fields_should_be_camel_case.severity = suggestion
-dotnet_naming_rule.private_fields_should_be_camel_case.symbols = private_fields
-dotnet_naming_rule.private_fields_should_be_camel_case.style = camel_case_style
+# --- Naming conventions ---
 
-dotnet_naming_symbols.private_fields.applicable_kinds = field
-dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+# 1. Интерфейсы должны начинаться с I (IPascalCase)
+dotnet_naming_rule.interfaces_should_start_with_i.severity = warning
+dotnet_naming_rule.interfaces_should_start_with_i.symbols = interface_symbols
+dotnet_naming_rule.interfaces_should_start_with_i.style = interface_style
 
+dotnet_naming_symbols.interface_symbols.applicable_kinds = interface
+dotnet_naming_style.interface_style.capitalization = pascal_case
+dotnet_naming_style.interface_style.required_prefix = I
+
+# 2. Публичные и защищенные члены должны быть PascalCase
+dotnet_naming_rule.members_should_be_pascal_case.severity = suggestion
+dotnet_naming_rule.members_should_be_pascal_case.symbols = public_symbols
+dotnet_naming_rule.members_should_be_pascal_case.style = pascal_case_style
+
+dotnet_naming_symbols.public_symbols.applicable_kinds = method, property, event, class, struct, enum
+dotnet_naming_symbols.public_symbols.applicable_accessibilities = public, internal, protected, protected_internal
+
+dotnet_naming_style.pascal_case_style.capitalization = pascal_case
+
+# 3. Приватные поля с префиксом _ (стандарт C#)
+dotnet_naming_rule.private_fields_with_underscore.severity = suggestion
+dotnet_naming_rule.private_fields_with_underscore.symbols = private_fields_symbols
+dotnet_naming_rule.private_fields_with_underscore.style = prefix_underscore_style
+
+dotnet_naming_symbols.private_fields_symbols.applicable_kinds = field
+dotnet_naming_symbols.private_fields_symbols.applicable_accessibilities = private
+
+dotnet_naming_style.prefix_underscore_style.capitalization = camel_case
+dotnet_naming_style.prefix_underscore_style.required_prefix = _
+
+# 4. Локальные переменные и параметры — camelCase
+dotnet_naming_rule.locals_should_be_camel_case.severity = suggestion
+dotnet_naming_rule.locals_should_be_camel_case.symbols = local_symbols
+dotnet_naming_rule.locals_should_be_camel_case.style = camel_case_style
+
+dotnet_naming_symbols.local_symbols.applicable_kinds = local, parameter
 dotnet_naming_style.camel_case_style.capitalization = camel_case
 
 # Strict analysis
