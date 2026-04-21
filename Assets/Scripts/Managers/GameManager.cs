@@ -3,134 +3,171 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public enum GameState
+public enum GameState { Dealing, PlayerSelection, BotTurn, Resolution, TablePhase }
+
+public class GameManager : MonoBehaviour
 {
-    Dealing,
-    PlayerSelection,
-    BotTurn,
-    Resolution,
-    TablePhase
-}
+    public static GameManager Instance { get; private set; }
 
-public class GameManager : Manager<GameManager>
-{
-    public GameState CurrentState;
-    public CardAnchor PlayerHand;
-    public CardAnchor BotHand;
-    public CardAnchor PlayerDiscardPile;
-    public CardAnchor BotDiscardPile;
-    public CardAnchor TableAnchor;
-    public CardAnchor CommonDiscardPile;
-    public Deck Deck;
+    public GameState currentState;
+    public CardAnchor playerHand;
+    public CardAnchor botHand;
+    public CardAnchor playerDiscardPile;
+    public CardAnchor botDiscardPile;
+    public CardAnchor tableAnchor;
+    public CardAnchor commonDiscardPile;
+    public Deck deck;
 
-    public int InitialDealCount = 6;
-    public int CardsToKeep = 2;
-    private List<Card> _playerSelectedCards = new();
-    private List<Card> _botSelectedCards = new();
+    public int initialDealCount = 6;
+    public int cardsToKeep = 2;
+    [SerializeField] private SpriteRenderer[] objectsToBlur;
+    private bool _zoomedIn;
+    private IEnumerator _nextCoroutine;
+    private List<Card> playerSelectedCards = new List<Card>();
+    private List<Card> botSelectedCards = new List<Card>();
 
-    private Camera _mainCamera;
+    private Camera mainCamera;
 
-    protected override void OnInit()
+    private void Awake()
     {
-        _mainCamera = Camera.main;
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+
+        mainCamera = Camera.main;
     }
 
     private void Start()
     {
-        Deck.InitializeDeck();
+        deck.InitializeDeck();
         StartCoroutine(DealCardsRoutine());
     }
 
     private void Update()
     {
-        if (CurrentState != GameState.PlayerSelection) return;
+        if (currentState != GameState.PlayerSelection) return;
 
-        if (Pointer.current != null && Pointer.current.press.wasPressedThisFrame)
+        if (Pointer.current != null)
         {
             Vector2 pointerPosition = Pointer.current.position.ReadValue();
-            Vector3 worldPosition = _mainCamera.ScreenToWorldPoint(pointerPosition);
-            
+            Vector3 worldPosition = mainCamera.ScreenToWorldPoint(pointerPosition);
             RaycastHit2D hit = Physics2D.Raycast(worldPosition, Vector2.zero);
-
             if (hit.collider != null)
             {
-                Card clickedCard = hit.collider.GetComponent<Card>();
-                if (clickedCard != null)
+                if (Pointer.current.press.wasPressedThisFrame)
                 {
-                    OnCardClicked(clickedCard);
+                    if (hit.collider.GetComponent<Card>() != null)
+                    {
+                        Card clickedCard = hit.collider.GetComponent<Card>();
+                        OnCardClicked(clickedCard);
+                    }
+
+                    if (hit.collider.name == "Bell" && _nextCoroutine != null)
+                    {
+                        StartCoroutine(_nextCoroutine);
+                        _nextCoroutine = null;
+                    }
+
+                    if (hit.collider.name == "Board")
+                    {
+                        if (_zoomedIn)
+                            StartCoroutine(Zoom(3, 5, mainCamera.transform.position, mainCamera.transform.position - new Vector3(0, -1.5f, 0), 0.01f, 0));
+                        else
+                            StartCoroutine(Zoom(5, 3, mainCamera.transform.position, mainCamera.transform.position + new Vector3(0,-1.5f, 0), 0, 0.01f));
+                    }
                 }
             }
         }
     }
 
+
+    private IEnumerator Zoom(float cameraStart, float cameraStop, Vector3 startPosition, Vector3 stopPosition, float blurStart, float blurStop)
+    {
+        float elapsed = 0f;
+        while (elapsed < 1)
+        {
+            foreach (SpriteRenderer sprite in objectsToBlur)
+            {
+                sprite.material.SetFloat("_BlurAmount", Mathf.Lerp(blurStart, blurStop, elapsed / 1));
+            }
+            mainCamera.orthographicSize = Mathf.Lerp(cameraStart, cameraStop, elapsed / 1);
+            mainCamera.transform.position = Vector3.Lerp(startPosition, stopPosition, elapsed / 1);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        mainCamera.orthographicSize = cameraStop;
+        mainCamera.transform.position = stopPosition;
+        _zoomedIn = !_zoomedIn;
+    }
+
     private IEnumerator DealCardsRoutine()
     {
-        CurrentState = GameState.Dealing;
-        
-        for (int i = 0; i < InitialDealCount; i++)
+        currentState = GameState.Dealing;
+        for (int i = 0; i < initialDealCount; i++)
         {
-            DealCardTo(PlayerHand, true);
+            DealCardTo(playerHand, true);
             yield return new WaitForSeconds(0.15f);
-            DealCardTo(BotHand, false);
+            DealCardTo(botHand, false);
             yield return new WaitForSeconds(0.15f);
         }
-        
-        CurrentState = GameState.PlayerSelection;
+        for (int i = 0; i < playerHand.cards.Count; i++)
+        {
+            playerHand.cards[i].collider.enabled = true;
+        }
+        currentState = GameState.PlayerSelection;
     }
 
     private void DealCardTo(CardAnchor targetHand, bool openFace)
     {
-        Card card = Deck.DrawCard(Deck.transform.position);
-        
+        Card card = deck.DrawCard(deck.transform.position);
         if (card == null) return;
-        
         card.SetOpened(openFace);
         targetHand.cards.Add(card);
-        targetHand.UpdateLayout(); 
+        targetHand.UpdateLayout();
     }
 
     public void OnCardClicked(Card card)
     {
-        if (!PlayerHand.cards.Contains(card)) return;
+        if (!playerHand.cards.Contains(card)) return;
 
-        if (_playerSelectedCards.Contains(card))
+        if (playerSelectedCards.Contains(card))
         {
-            _playerSelectedCards.Remove(card);
-            card.transform.localScale = Vector3.one; 
+            playerSelectedCards.Remove(card);
+            card.transform.localScale = Vector3.one;
+            card.transform.position += Vector3.down;
         }
-        else if (_playerSelectedCards.Count < CardsToKeep)
+        else if (playerSelectedCards.Count < cardsToKeep)
         {
-            _playerSelectedCards.Add(card);
-            card.transform.localScale = Vector3.one * 1.2f; 
+            playerSelectedCards.Add(card);
+            card.transform.localScale = Vector3.one * 1.2f;
+            card.transform.position += Vector3.up;
         }
 
-        if (_playerSelectedCards.Count == CardsToKeep)
-        {
-            StartCoroutine(ProcessSelectionRoutine());
-        }
+        if (playerSelectedCards.Count == cardsToKeep)
+            _nextCoroutine = ProcessSelectionRoutine();
+        else
+            _nextCoroutine = null;
     }
 
     private IEnumerator ProcessSelectionRoutine()
     {
-        CurrentState = GameState.BotTurn;
+        currentState = GameState.BotTurn;
         yield return new WaitForSeconds(0.5f);
 
-        for (int i = PlayerHand.cards.Count - 1; i >= 0; i--)
+        for (int i = playerHand.cards.Count - 1; i >= 0; i--)
         {
-            Card card = PlayerHand.cards[i];
-            card.transform.localScale = Vector3.one;
+            Card card = playerHand.cards[i];
 
-            if (!_playerSelectedCards.Contains(card))
+            if (!playerSelectedCards.Contains(card))
             {
-                PlayerHand.cards.RemoveAt(i);
+                playerHand.cards.RemoveAt(i);
+                card.collider.enabled = false;
                 card.SetOpened(false);
-                PlayerDiscardPile.cards.Add(card);
+                playerDiscardPile.cards.Add(card);
             }
         }
 
-        PlayerHand.UpdateLayout();
-        PlayerDiscardPile.UpdateLayout();
-        
+        playerHand.UpdateLayout();
+        playerDiscardPile.UpdateLayout();
         StartCoroutine(BotTurnRoutine());
     }
 
@@ -138,56 +175,56 @@ public class GameManager : Manager<GameManager>
     {
         yield return new WaitForSeconds(1f);
 
-        _botSelectedCards.Add(BotHand.cards[0]);
-        _botSelectedCards.Add(BotHand.cards[1]);
+        botSelectedCards.Add(botHand.cards[0]);
+        botSelectedCards.Add(botHand.cards[1]);
 
-        for (int i = BotHand.cards.Count - 1; i >= 0; i--)
+        for (int i = botHand.cards.Count - 1; i >= 0; i--)
         {
-            Card card = BotHand.cards[i];
-            
-            if (!_botSelectedCards.Contains(card))
+            Card card = botHand.cards[i];
+
+            if (!botSelectedCards.Contains(card))
             {
-                BotHand.cards.RemoveAt(i);
+                botHand.cards.RemoveAt(i);
                 card.SetOpened(false);
-                BotDiscardPile.cards.Add(card);
+                botDiscardPile.cards.Add(card);
             }
         }
 
-        BotHand.UpdateLayout();
-        BotDiscardPile.UpdateLayout();
+        botHand.UpdateLayout();
+        botDiscardPile.UpdateLayout();
 
         yield return new WaitForSeconds(1f);
-        
+
         StartCoroutine(ResolutionAndTablePhaseRoutine());
     }
-    
+
     private IEnumerator ResolutionAndTablePhaseRoutine()
     {
-        CurrentState = GameState.Resolution;
+        currentState = GameState.Resolution;
 
         yield return new WaitForSeconds(2f);
-        
-        CurrentState = GameState.TablePhase;
 
-        foreach (Card c in PlayerDiscardPile.cards) c.SetOpened(false);
-        foreach (Card c in BotDiscardPile.cards) c.SetOpened(false);
+        currentState = GameState.TablePhase;
+
+        foreach (Card c in playerDiscardPile.cards) c.SetOpened(false);
+        foreach (Card c in botDiscardPile.cards) c.SetOpened(false);
 
         yield return new WaitForSeconds(0.5f);
 
-        for (int i = 0; i < 6; i++) 
+        for (int i = 0; i < 6; i++)
         {
-            Card card = Deck.DrawCard(Deck.transform.position);
+            Card card = deck.DrawCard(deck.transform.position);
             if (card != null)
             {
                 card.SetOpened(false);
-                TableAnchor.cards.Add(card);
+                tableAnchor.cards.Add(card);
             }
         }
 
-        TableAnchor.UpdateLayout();
+        tableAnchor.UpdateLayout();
         yield return new WaitForSeconds(0.5f);
 
-        List<Card> leftToRightCards = new List<Card>(TableAnchor.cards);
+        List<Card> leftToRightCards = new List<Card>(tableAnchor.cards);
         leftToRightCards.Sort((a, b) => a.transform.position.x.CompareTo(b.transform.position.x));
 
         for (int i = 0; i < leftToRightCards.Count; i++)
@@ -198,48 +235,49 @@ public class GameManager : Manager<GameManager>
 
         yield return new WaitForSeconds(2f);
 
-        foreach (Card c in TableAnchor.cards) c.SetOpened(false);
+        foreach (Card c in tableAnchor.cards) c.SetOpened(false);
         yield return new WaitForSeconds(0.5f);
 
-        Vector3 centerPos = TableAnchor.transform.position;
-        foreach (Card c in TableAnchor.cards)
+        Vector3 centerPos = tableAnchor.transform.position;
+        foreach (Card c in tableAnchor.cards)
         {
             c.MoveTo(centerPos, 0.3f);
         }
-        
+
         yield return new WaitForSeconds(0.4f);
 
-        for (int i = 0; i < TableAnchor.cards.Count; i++)
+        for (int i = 0; i < tableAnchor.cards.Count; i++)
         {
-            int randomIndex = Random.Range(i, TableAnchor.cards.Count);
-            Card temp = TableAnchor.cards[i];
-            TableAnchor.cards[i] = TableAnchor.cards[randomIndex];
-            TableAnchor.cards[randomIndex] = temp;
+            int randomIndex = Random.Range(i, tableAnchor.cards.Count);
+            Card temp = tableAnchor.cards[i];
+            tableAnchor.cards[i] = tableAnchor.cards[randomIndex];
+            tableAnchor.cards[randomIndex] = temp;
         }
-        
-        TableAnchor.UpdateLayout();
-        
+
+        tableAnchor.UpdateLayout();
+
         yield return new WaitForSeconds(0.6f);
 
         for (int i = 0; i < 3; i++)
         {
-            if (TableAnchor.cards.Count > 0)
+            if (tableAnchor.cards.Count > 0)
             {
-                Card card = TableAnchor.cards[0];
-                TableAnchor.cards.RemoveAt(0);
-                CommonDiscardPile.cards.Add(card);
+                Card card = tableAnchor.cards[0];
+                tableAnchor.cards.RemoveAt(0);
+                commonDiscardPile.cards.Add(card);
             }
         }
 
-        TableAnchor.UpdateLayout();
-        CommonDiscardPile.UpdateLayout();
+        tableAnchor.UpdateLayout();
+        commonDiscardPile.UpdateLayout();
 
         yield return new WaitForSeconds(0.5f);
 
-        if (TableAnchor.cards.Count > 0)
+        if (tableAnchor.cards.Count > 0)
         {
-            int randomCardIndex = Random.Range(0, TableAnchor.cards.Count);
-            TableAnchor.cards[randomCardIndex].SetOpened(true);
+            int randomCardIndex = Random.Range(0, tableAnchor.cards.Count);
+            tableAnchor.cards[randomCardIndex].SetOpened(true);
         }
     }
+
 }

@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Card
   _cardData: {fileID: 11400000, guid: db36b4d821cc40ac0954c0823896f013, type: 2}
+  collider: {fileID: 674199926211655724}
   IsOpened: 0
 --- !u!61 &674199926211655724
 BoxCollider2D:
@@ -114,7 +115,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6792972679436424634}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
