@@ -5,7 +5,7 @@ public class Deck : MonoBehaviour
 {
     public Card cardPrefab;
     public List<CardData> startingCards;
-    
+
     private List<CardData> drawPile = new List<CardData>();
 
     public void InitializeDeck()
@@ -35,7 +35,6 @@ public class Deck : MonoBehaviour
 
         Card newCard = Instantiate(cardPrefab, spawnPosition, Quaternion.identity);
         newCard.InitializeData(drawnData);
-        
         return newCard;
     }
 }

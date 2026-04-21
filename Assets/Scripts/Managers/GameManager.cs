@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
 
     public int initialDealCount = 6;
     public int cardsToKeep = 2;
+    [SerializeField] private SpriteRenderer[] objectsToBlur;
+    private bool _zoomedIn;
+    private IEnumerator _nextCoroutine;
     private List<Card> playerSelectedCards = new List<Card>();
     private List<Card> botSelectedCards = new List<Card>();
 
@@ -43,28 +46,62 @@ public class GameManager : MonoBehaviour
     {
         if (currentState != GameState.PlayerSelection) return;
 
-        if (Pointer.current != null && Pointer.current.press.wasPressedThisFrame)
+        if (Pointer.current != null)
         {
             Vector2 pointerPosition = Pointer.current.position.ReadValue();
             Vector3 worldPosition = mainCamera.ScreenToWorldPoint(pointerPosition);
-            
             RaycastHit2D hit = Physics2D.Raycast(worldPosition, Vector2.zero);
-
             if (hit.collider != null)
             {
-                Card clickedCard = hit.collider.GetComponent<Card>();
-                if (clickedCard != null)
+                if (Pointer.current.press.wasPressedThisFrame)
                 {
-                    OnCardClicked(clickedCard);
+                    if (hit.collider.GetComponent<Card>() != null)
+                    {
+                        Card clickedCard = hit.collider.GetComponent<Card>();
+                        OnCardClicked(clickedCard);
+                    }
+
+                    if (hit.collider.name == "Bell" && _nextCoroutine != null)
+                    {
+                        StartCoroutine(_nextCoroutine);
+                        _nextCoroutine = null;
+                    }
+
+                    if (hit.collider.name == "Board")
+                    {
+                        if (_zoomedIn)
+                            StartCoroutine(Zoom(3, 5, mainCamera.transform.position, mainCamera.transform.position - new Vector3(0, -1.5f, 0), 0.01f, 0));
+                        else
+                            StartCoroutine(Zoom(5, 3, mainCamera.transform.position, mainCamera.transform.position + new Vector3(0,-1.5f, 0), 0, 0.01f));
+                    }
                 }
             }
         }
     }
 
+
+    private IEnumerator Zoom(float cameraStart, float cameraStop, Vector3 startPosition, Vector3 stopPosition, float blurStart, float blurStop)
+    {
+        float elapsed = 0f;
+        while (elapsed < 1)
+        {
+            foreach (SpriteRenderer sprite in objectsToBlur)
+            {
+                sprite.material.SetFloat("_BlurAmount", Mathf.Lerp(blurStart, blurStop, elapsed / 1));
+            }
+            mainCamera.orthographicSize = Mathf.Lerp(cameraStart, cameraStop, elapsed / 1);
+            mainCamera.transform.position = Vector3.Lerp(startPosition, stopPosition, elapsed / 1);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        mainCamera.orthographicSize = cameraStop;
+        mainCamera.transform.position = stopPosition;
+        _zoomedIn = !_zoomedIn;
+    }
+
     private IEnumerator DealCardsRoutine()
     {
         currentState = GameState.Dealing;
-        
         for (int i = 0; i < initialDealCount; i++)
         {
             DealCardTo(playerHand, true);
@@ -72,16 +109,17 @@ public class GameManager : MonoBehaviour
             DealCardTo(botHand, false);
             yield return new WaitForSeconds(0.15f);
         }
-        
+        for (int i = 0; i < playerHand.cards.Count; i++)
+        {
+            playerHand.cards[i].collider.enabled = true;
+        }
         currentState = GameState.PlayerSelection;
     }
 
     private void DealCardTo(CardAnchor targetHand, bool openFace)
     {
         Card card = deck.DrawCard(deck.transform.position);
-        
         if (card == null) return;
-        
         card.SetOpened(openFace);
         targetHand.cards.Add(card);
         targetHand.UpdateLayout();
@@ -94,18 +132,20 @@ public class GameManager : MonoBehaviour
         if (playerSelectedCards.Contains(card))
         {
             playerSelectedCards.Remove(card);
-            card.transform.localScale = Vector3.one; 
+            card.transform.localScale = Vector3.one;
+            card.transform.position += Vector3.down;
         }
         else if (playerSelectedCards.Count < cardsToKeep)
         {
             playerSelectedCards.Add(card);
-            card.transform.localScale = Vector3.one * 1.2f; 
+            card.transform.localScale = Vector3.one * 1.2f;
+            card.transform.position += Vector3.up;
         }
 
         if (playerSelectedCards.Count == cardsToKeep)
-        {
-            StartCoroutine(ProcessSelectionRoutine());
-        }
+            _nextCoroutine = ProcessSelectionRoutine();
+        else
+            _nextCoroutine = null;
     }
 
     private IEnumerator ProcessSelectionRoutine()
@@ -116,11 +156,11 @@ public class GameManager : MonoBehaviour
         for (int i = playerHand.cards.Count - 1; i >= 0; i--)
         {
             Card card = playerHand.cards[i];
-            card.transform.localScale = Vector3.one;
 
             if (!playerSelectedCards.Contains(card))
             {
                 playerHand.cards.RemoveAt(i);
+                card.collider.enabled = false;
                 card.SetOpened(false);
                 playerDiscardPile.cards.Add(card);
             }
@@ -128,7 +168,6 @@ public class GameManager : MonoBehaviour
 
         playerHand.UpdateLayout();
         playerDiscardPile.UpdateLayout();
-        
         StartCoroutine(BotTurnRoutine());
     }
 
@@ -142,7 +181,7 @@ public class GameManager : MonoBehaviour
         for (int i = botHand.cards.Count - 1; i >= 0; i--)
         {
             Card card = botHand.cards[i];
-            
+
             if (!botSelectedCards.Contains(card))
             {
                 botHand.cards.RemoveAt(i);
@@ -155,7 +194,7 @@ public class GameManager : MonoBehaviour
         botDiscardPile.UpdateLayout();
 
         yield return new WaitForSeconds(1f);
-        
+
         StartCoroutine(ResolutionAndTablePhaseRoutine());
     }
 
@@ -164,7 +203,7 @@ public class GameManager : MonoBehaviour
         currentState = GameState.Resolution;
 
         yield return new WaitForSeconds(2f);
-        
+
         currentState = GameState.TablePhase;
 
         foreach (Card c in playerDiscardPile.cards) c.SetOpened(false);
@@ -204,7 +243,7 @@ public class GameManager : MonoBehaviour
         {
             c.MoveTo(centerPos, 0.3f);
         }
-        
+
         yield return new WaitForSeconds(0.4f);
 
         for (int i = 0; i < tableAnchor.cards.Count; i++)
@@ -214,9 +253,9 @@ public class GameManager : MonoBehaviour
             tableAnchor.cards[i] = tableAnchor.cards[randomIndex];
             tableAnchor.cards[randomIndex] = temp;
         }
-        
+
         tableAnchor.UpdateLayout();
-        
+
         yield return new WaitForSeconds(0.6f);
 
         for (int i = 0; i < 3; i++)
@@ -240,4 +279,5 @@ public class GameManager : MonoBehaviour
             tableAnchor.cards[randomCardIndex].SetOpened(true);
         }
     }
+
 }

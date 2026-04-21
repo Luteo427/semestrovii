@@ -1,12 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
+
 [RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Collider2D))]
 public class Card : MonoBehaviour
 {
     [SerializeField] private CardData _cardData;
+    public BoxCollider2D collider;
     public bool IsOpened;
+    private bool _isHovered;
 
     private SpriteRenderer _spriteRenderer;
 
@@ -79,11 +82,31 @@ public class Card : MonoBehaviour
         transform.position = target;
     }
 
+    private void OnMouseOver()
+    {
+        if (!_isHovered)
+        {
+            _isHovered = true;
+            _spriteRenderer.sortingOrder += 100;
+            transform.localScale *= 1.2f;
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        if (_isHovered)
+        {
+            _isHovered = false;
+            transform.localScale /= 1.2f;
+            _spriteRenderer.sortingOrder -= 100;
+        }
+    }
+    /*
     private void OnMouseDown()
     {
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnCardClicked(this);
         }
-    }
+    }*/
 }

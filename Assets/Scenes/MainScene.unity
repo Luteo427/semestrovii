@@ -506,25 +506,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f9beb6748fe8374d85220f910dc17d7, type: 3}
---- !u!1 &491343125 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
-  m_PrefabInstance: {fileID: 1659401897}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &491343126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 491343125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a99136125e54164fa007539221596f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CardAnchor
-  cards: []
-  offset: {x: 0.5, y: 0}
 --- !u!1 &497233196
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,6 +643,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 497233196}
   m_CullTransparentMesh: 1
+--- !u!212 &677812927 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6907588382138123167, guid: e836a0f68be6ac04ebf2221fa80ab1ec, type: 3}
+  m_PrefabInstance: {fileID: 3670433890891341004}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &712104840
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,15 +678,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   currentState: 0
-  playerHand: {fileID: 491343126}
-  botHand: {fileID: 1067034743}
-  playerDiscardPile: {fileID: 1561122787}
+  playerHand: {fileID: 1659401898}
+  botHand: {fileID: 862598071}
+  playerDiscardPile: {fileID: 1550027971}
   botDiscardPile: {fileID: 1565827444}
-  tableAnchor: {fileID: 1914799091}
+  tableAnchor: {fileID: 3123487000484107399}
   commonDiscardPile: {fileID: 1846138708}
   deck: {fileID: 1010116869}
   initialDealCount: 6
   cardsToKeep: 2
+  objectsToBlur:
+  - {fileID: 830681039}
+  - {fileID: 677812927}
+  - {fileID: 2130626477}
 --- !u!4 &712104842
 Transform:
   m_ObjectHideFlags: 0
@@ -710,7 +700,7 @@ Transform:
   m_GameObject: {fileID: 712104840}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.70772, y: 0.474, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -804,6 +794,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &830681039 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5834026666451245410, guid: e836a0f68be6ac04ebf2221fa80ab1ec, type: 3}
+  m_PrefabInstance: {fileID: 3670433890891341004}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &862598070
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -858,16 +853,24 @@ PrefabInstance:
       objectReference: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
       propertyPath: m_Name
-      value: CardAnchor (2)
+      value: BotHand
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1067034743}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
+--- !u!114 &862598071 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2991038225930442678, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
+  m_PrefabInstance: {fileID: 862598070}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a99136125e54164fa007539221596f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardAnchor
 --- !u!1 &962094936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1260,35 +1263,13 @@ PrefabInstance:
       objectReference: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
       propertyPath: m_Name
-      value: CardAnchor (5)
+      value: CommonDiscardPile
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1846138708}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
---- !u!1 &1067034742 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
-  m_PrefabInstance: {fileID: 862598070}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1067034743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1067034742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a99136125e54164fa007539221596f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CardAnchor
-  cards: []
-  offset: {x: 0.5, y: 0}
 --- !u!1 &1108256772
 GameObject:
   m_ObjectHideFlags: 0
@@ -1420,8 +1401,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1117208281}
   - component: {fileID: 1117208280}
+  - component: {fileID: 1117208282}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: Bell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1474,14 +1456,14 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1486605127
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dd286f2d2b67c1144b5e51a9bda5191a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.5000002, y: 2.5000002}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1495,12 +1477,58 @@ Transform:
   m_GameObject: {fileID: 1117208279}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.09, y: -2.11, z: 0}
+  m_LocalPosition: {x: 3.789, y: -1.323, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1117208282
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117208279}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.5000002, y: 2.5000002}
+    newSize: {x: 2.5000002, y: 2.5000002}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.61, y: 1.81}
+  m_EdgeRadius: 0
 --- !u!1 &1218853390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2617,35 +2645,24 @@ PrefabInstance:
       objectReference: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
       propertyPath: m_Name
-      value: CardAnchor (1)
+      value: PlayerDiscardPile
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1561122787}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
---- !u!1 &1561122786 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
+--- !u!114 &1550027971 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2991038225930442678, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
   m_PrefabInstance: {fileID: 1550027970}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1561122787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1561122786}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a99136125e54164fa007539221596f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardAnchor
-  cards: []
-  offset: {x: 0.5, y: 0}
 --- !u!1 &1561550242
 GameObject:
   m_ObjectHideFlags: 0
@@ -2731,35 +2748,24 @@ PrefabInstance:
       objectReference: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
       propertyPath: m_Name
-      value: CardAnchor (3)
+      value: BotDiscardPile
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1565827444}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
---- !u!1 &1565827443 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
+--- !u!114 &1565827444 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2991038225930442678, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
   m_PrefabInstance: {fileID: 1565827442}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1565827444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1565827443}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a99136125e54164fa007539221596f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardAnchor
-  cards: []
-  offset: {x: 0.5, y: 0}
 --- !u!1001 &1659401897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2814,16 +2820,24 @@ PrefabInstance:
       objectReference: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
       propertyPath: m_Name
-      value: CardAnchor (4)
+      value: PlayerHand
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 491343126}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
+--- !u!114 &1659401898 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2991038225930442678, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
+  m_PrefabInstance: {fileID: 1659401897}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a99136125e54164fa007539221596f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardAnchor
 --- !u!1001 &1659726606
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3176,25 +3190,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f9beb6748fe8374d85220f910dc17d7, type: 3}
---- !u!1 &1846138707 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
+--- !u!114 &1846138708 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2991038225930442678, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
   m_PrefabInstance: {fileID: 1011394417}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1846138708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1846138707}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a99136125e54164fa007539221596f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardAnchor
-  cards: []
-  offset: {x: 0.5, y: 0}
 --- !u!1 &1901038725
 GameObject:
   m_ObjectHideFlags: 0
@@ -3205,8 +3211,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1901038726}
   - component: {fileID: 1901038727}
+  - component: {fileID: 1901038728}
   m_Layer: 0
-  m_Name: IMG_3764_0
+  m_Name: Board
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3286,25 +3293,52 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &1914799090 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
-  m_PrefabInstance: {fileID: 3123487000484107398}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1914799091
-MonoBehaviour:
+--- !u!61 &1901038728
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1914799090}
+  m_GameObject: {fileID: 1901038725}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a99136125e54164fa007539221596f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CardAnchor
-  cards: []
-  offset: {x: 0.5, y: 0}
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.03986883, y: 0.0626508}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.34, y: 2.17}
+    newSize: {x: 5.34, y: 2.17}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 4.3034143, y: 1.6118386}
+  m_EdgeRadius: 0
 --- !u!1 &2046775657
 GameObject:
   m_ObjectHideFlags: 0
@@ -3484,6 +3518,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!212 &2130626477 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5978947172329115058, guid: e836a0f68be6ac04ebf2221fa80ab1ec, type: 3}
+  m_PrefabInstance: {fileID: 3670433890891341004}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1615198778591638084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3766,16 +3805,24 @@ PrefabInstance:
       objectReference: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
       propertyPath: m_Name
-      value: CardAnchor
+      value: TableAnchor
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3895647181847469222, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1914799091}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
+--- !u!114 &3123487000484107399 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2991038225930442678, guid: b856c25fe0061b04ca5a278dfe9efc7d, type: 3}
+  m_PrefabInstance: {fileID: 3123487000484107398}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a99136125e54164fa007539221596f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardAnchor
 --- !u!1001 &3383300978991560555
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3849,6 +3896,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5834026666451245410, guid: e836a0f68be6ac04ebf2221fa80ab1ec, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ac3f71a9d76a3a4f943695d1b37f61f, type: 2}
+    - target: {fileID: 5978947172329115058, guid: e836a0f68be6ac04ebf2221fa80ab1ec, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ac3f71a9d76a3a4f943695d1b37f61f, type: 2}
+    - target: {fileID: 6907588382138123167, guid: e836a0f68be6ac04ebf2221fa80ab1ec, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ac3f71a9d76a3a4f943695d1b37f61f, type: 2}
     - target: {fileID: 8388649264618724914, guid: e836a0f68be6ac04ebf2221fa80ab1ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.07
@@ -4047,12 +4106,12 @@ SceneRoots:
   - {fileID: 1659726606}
   - {fileID: 973034273}
   - {fileID: 3108921459257709558}
-  - {fileID: 3123487000484107398}
-  - {fileID: 1011394417}
+  - {fileID: 1659401897}
   - {fileID: 862598070}
   - {fileID: 1550027970}
   - {fileID: 1565827442}
-  - {fileID: 1659401897}
+  - {fileID: 3123487000484107398}
+  - {fileID: 1011394417}
   - {fileID: 7911511277595247780}
   - {fileID: 1010116870}
   - {fileID: 1117208281}
