@@ -31,7 +31,6 @@ public class UIToolkitLoader : MonoBehaviour
 
     private void Start()
     {
-        // Читаем цель из статического менеджера
         StartCoroutine(LoadAsync(SceneHandler.TargetSceneIndex));
     }
 
@@ -39,10 +38,8 @@ public class UIToolkitLoader : MonoBehaviour
     {
         if (_loadingIcon != null && !_isLoaded)
         {
-            // Увеличиваем базовый угол
             _currentAngle += rotationSpeed * Time.deltaTime;
             
-            // Заставляем вращение дергаться шагами по 45 градусов
             float steppedAngle = Mathf.Floor(_currentAngle / 45f) * 45f;
             
             _loadingIcon.style.rotate = new Rotate(new Angle(steppedAngle));
@@ -54,20 +51,15 @@ public class UIToolkitLoader : MonoBehaviour
         if (_loadingLabel != null) _loadingLabel.text = loadingText;
         yield return null;
 
-        // Важно: Загружаем сцену АДДИТИВНО (поверх текущей)
         AsyncOperation operation = SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
         
-        // Разрешаем активацию. Сцена будет создана прямо сейчас.
         operation.allowSceneActivation = true;
 
-        // Ждем, пока сцена полностью не загрузится и не инициализируется
         while (!operation.isDone)
         {
             yield return null;
         }
 
-        // На этом этапе все объекты новой сцены уже созданы и отработали Start().
-        // Делаем новую сцену активной по умолчанию (чтобы свет и настройки окружения брались из нее)
         SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(index));
 
         _isLoaded = true;
@@ -78,18 +70,15 @@ public class UIToolkitLoader : MonoBehaviour
             _loadingLabel.AddToClassList("text-ready");
         }
 
-        // Ждем ввода от пользователя
         while (true)
         {
             if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
             {
-                break; // Выходим из цикла ожидания
+                break;
             }
             yield return null;
         }
 
-        // Пользователь нажал пробел. Самоуничтожаем сцену загрузки.
-        // Укажите точное имя вашей сцены загрузки.
         SceneManager.UnloadSceneAsync("LoadingScene"); 
     }
 }
