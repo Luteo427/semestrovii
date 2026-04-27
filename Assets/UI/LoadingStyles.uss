@@ -1,0 +1,44 @@
+/* Контейнер: асимметричный, с грубыми рамками и слегка перекошенный */
+#BottomRightAnchor {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    position: absolute;
+    right: 40px;
+    bottom: 40px;
+    background-color: rgb(15, 15, 15); /* Почти черный, грязный фон */
+    border-color: rgb(180, 80, 20); /* Цвет ржавчины / старой краски */
+    border-width: 2px 0px 4px 6px; /* Неровная рамка: толстая слева и снизу */
+    padding: 10px 20px;
+    rotate: -1deg; /* Нарочитая кривизна */
+}
+
+/* Текст: резкие тени, тусклые цвета */
+#LoadingText {
+    color: rgb(200, 180, 150); /* Выцветший бежевый */
+    font-size: 16px;
+    -unity-font-style: bold;
+    letter-spacing: 2px;
+    margin-right: 20px;
+    /* Резкая тень без размытия создает эффект выбитого шрифта или грязи */
+    text-shadow: 2px 2px 0px rgb(0, 0, 0); 
+}
+
+/* Иконка: под цвет ржавой рамки */
+#LoadingIcon {
+    width: 24px;
+    height: 24px;
+    -unity-background-image-tint-color: rgb(180, 80, 20); 
+}
+
+/* Готовность: агрессивный цвет, мгновенное изменение без плавности */
+.text-ready {
+    color: rgb(220, 40, 40); /* Тревожный красный */
+    scale: 1.05;
+    transition-duration: 0s; /* Никакой плавности. Текст должен "ударить" по глазам */
+}
+
+.rotating {
+    transition-property: rotate;
+    transition-duration: 2s;
+}

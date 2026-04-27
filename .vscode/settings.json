@@ -1,6 +1,6 @@
 {
     "dotnet.defaultSolution": "semestrovii.slnx",
-    "dotrush.roslyn.dotnetSdkDirectory": "C:/Program Files/dotnet/sdk/10.0.201",
+    "dotrush.roslyn.dotnetSdkDirectory": "C:/Program Files/dotnet/sdk/10.0.203",
     "dotrush.msbuildProperties": {
         "DefineConstants": "UNITY_EDITOR"
     },

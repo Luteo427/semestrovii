@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BetManager : MonoBehaviour
+public class BetHandler : MonoBehaviour
 {
     public Coin coinPrefab;
     public BetZone coinPoolAnchor;
